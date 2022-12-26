@@ -1,13 +1,72 @@
+
 body {
+
+  --bs-link-color: var(--bs-white);
+  --bs-link-hover-color: var(--bs-white);
+
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #4158D0;
+background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 41%, #FFCC70 100%);
+height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.btn-link {
+  text-decoration: none;
+}
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.chaoticTodos {
+  margin-top: calc(100vh / 2 - 16rem);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 1rem;
+  align-items: center;
+  /* height: 100vh; */
+}
+
+h1 {
+  color: white;
+}
+
+.todoList {
+  max-width: 40rem;
+}
+
+.todoListItems {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.todoListItems > .todoListItem > .card-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todoListItems > .todoListItem > .card-body div {
+  display: flex;
+  gap: 1rem;
+}
+
+
+.struckThrough {
+  text-decoration: line-through;
+  color: grey;
+}
+
+.todoListItemsFooter {
+  display: flex;
+  justify-content: center;
 }
