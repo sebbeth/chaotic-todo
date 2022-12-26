@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
+import useIsVisible from "../hooks/visible.hook";
 
 interface TodoItem {
   text: string;
@@ -12,44 +13,56 @@ const TodoList: React.FC = () => {
   // Use the useState hook to create a state variable for the todo items and a function to update it
   const [todoItems, setTodoItems] = useState<TodoItem[]>(getItemsFromStorage());
 
+  const isVisible = useIsVisible();
+
   // Handle the submission of the form to add a new todo item
-  const handleSubmit = (event: React.FormEvent<any>) => {
-    // Prevent the default form submission behavior
-    event.preventDefault();
+  function handleSubmit(event: React.FormEvent<any>) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
 
-    // // Get the value of the input field
-    const newTodo = event.currentTarget.elements.newTodo.value;
+        // // Get the value of the input field
+        const newTodo = event.currentTarget.elements.newTodo.value;
 
-    // // Add the new todo item to the list
-    if (newTodo) {
-        setTodoItems([...todoItems, { text: newTodo, isComplete: false }]);
+        // // Add the new todo item to the list
+        if (newTodo) {
+            addItemToList(newTodo);
+        }
+
+        // // Clear the input field
+        event.currentTarget.elements.newTodo.value = "";
     }
 
-    // // Clear the input field
-    event.currentTarget.elements.newTodo.value = "";
-  };
+    function addItemToList(todoItem: TodoItem) {
+        setTodoItems([...todoItems, todoItem]);
+
+    }
 
   // Handle the change of a checkbox to mark a todo item as complete or not
-  const toggleCheckbox = (index: number) => {
-    // Create a copy of the todo items list
-    const newTodoItems = [...todoItems];
+  function toggleCheckbox(index: number) {
+        // Create a copy of the todo items list
+        const newTodoItems = [...todoItems];
 
-    // Toggle the isComplete property of the todo item at the specified index
-    newTodoItems[index].isComplete = !newTodoItems[index].isComplete;
+        // Toggle the isComplete property of the todo item at the specified index
+        newTodoItems[index].isComplete = !newTodoItems[index].isComplete;
 
-    // Update the state with the modified todo items list
-    setTodoItems(newTodoItems);
-  };
+        // Update the state with the modified todo items list
+        setTodoItems(newTodoItems);
+    }
 
-  const deleteItem = (index: number) => {
-    const newTodoItems = [...todoItems];
-    newTodoItems.splice(index, 1);
-    setTodoItems(newTodoItems);
-  };
+  function deleteItem(index: number) {
+        const newTodoItems = [...todoItems];
+        newTodoItems.splice(index, 1);
+        setTodoItems(newTodoItems);
+    }
 
   useEffect(() => {
     saveItemsToStorage(todoItems);
   }, [todoItems]);
+
+
+  useEffect(() => {
+    addItemToList({isComplete: false, text: `${todoItems.length}`});
+},[isVisible, addItemToList])
 
   const clearAll = () => {
     setTodoItems([]);
